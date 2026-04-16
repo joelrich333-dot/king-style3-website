@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="King Style Rosenheim – Premium Barbershop für Haarschnitt, Bartpflege und Nassrasur. Jetzt online buchen.">
+  <title>King Style – Premium Barbershop Rosenheim</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ink': '#050505',
+            'gold': '#c9a84c',
+            'goldl': '#e8c97a',
+            'goldd': '#a8882e',
+            'cream': '#f0ead6',
+            's1': '#111111',
+          },
+          fontFamily: {
+            display: ['Playfair Display', 'Georgia', 'serif'],
+            accent: ['Cormorant Garamond', 'Georgia', 'serif'],
+            body: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --glare-x: 50%;
+      --glare-y: 50%;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: auto
+    }
+
+    /* GSAP handles smoothness */
+    body {
+      background: #050505;
+      color: #f0ead6;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden
+    }
+
+    /* ── Pro Glare Effect ── */
+    .mouse-glare {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      background: radial-gradient(circle 500px at var(--glare-x) var(--glare-y), rgba(201, 168, 76, 0.06), transparent 70%);
+      mix-blend-mode: screen;
+    }
+
+    /* ── Typography & Scrolly Effects ── */
+    .gold-text {
+      background: linear-gradient(135deg, #c9a84c 0%, #f5d78e 50%, #c9a84c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Cinematic Hero ── */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1600&q=80') center/cover no-repeat;
+      filter: brightness(0.35) saturate(0.85);
+      z-index: -1;
+    }
+
+    .hero-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, transparent 30%, rgba(5, 5, 5, 0.95) 100%);
+      pointer-events: none;
+    }
+
+    /* ── Buttons ── */
+    .btn-lmax {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem 2.5rem;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      color: #c9a84c;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      overflow: hidden;
+      background: rgba(5, 5, 5, 0.5);
+    }
+
+    .btn-lmax:hover {
+      color: #050505;
+      border-color: #c9a84c;
+    }
+
+    .btn-lmax::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #c9a84c;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: -1;
+    }
+
+    .btn-lmax:hover::before {
+      transform: translateY(0);
+    }
+
+    /* ── Glass Cards ── */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(201, 168, 76, 0.08);
+      /* Consistent subtle frame */
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-card:hover {
+      border-color: rgba(201, 168, 76, 0.6);
+      transform: scale(1.09);
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 50px rgba(201, 168, 76, 0.1);
+      z-index: 10;
+    }
+
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.015);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(201, 168, 76, 0.12);
+    }
+
+    /* ── Corner accent (Pro version) ── */
+    .corners {
+      position: relative;
+    }
+
+    .corners::before,
+    .corners::after,
+    .corners .c3,
+    .corners .c4 {
+      content: '';
+      position: absolute;
+      width: 1.75rem;
+      height: 1.75rem;
+      transition: border-color 0.4s;
+    }
+
+    .corners::before {
+      top: 0;
+      left: 0;
+      border-top: 2px solid rgba(201, 168, 76, 0.45);
+      border-left: 2px solid rgba(201, 168, 76, 0.45);
+    }
+
+    .corners::after {
+      top: 0;
+      right: 0;
+      border-top: 2px solid rgba(201, 168, 76, 0.45);
+      border-right: 2px solid rgba(201, 168, 76, 0.45);
+    }
+
+    .corners .c3 {
+      bottom: 0;
+      left: 0;
+      border-bottom: 2px solid rgba(201, 168, 76, 0.45);
+      border-left: 2px solid rgba(201, 168, 76, 0.45);
+    }
+
+    .corners .c4 {
+      bottom: 0;
+      right: 0;
+      border-bottom: 2px solid rgba(201, 168, 76, 0.45);
+      border-right: 2px solid rgba(201, 168, 76, 0.45);
+    }
+
+    .glass-card:hover .corners::before,
+    .glass-card:hover .corners::after,
+    .glass-card:hover .corners .c3,
+    .glass-card:hover .corners .c4 {
+      border-color: rgba(201, 168, 76, 0.9);
+    }
+
+    /* ── Hide Content for Auto-Reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+
+    /* ── Forms ── */
+    .fi {
+      background: transparent;
+      border: 1px solid rgba(201, 168, 76, 0.18);
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      color: #f0ead6;
+      outline: none;
+      transition: all 0.3s;
+      width: 100%;
+      color-scheme: dark;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .fi:focus {
+      border-color: #c9a84c;
+      background: rgba(201, 168, 76, 0.03);
+    }
+
+    .fi::placeholder {
+      color: rgba(240, 234, 214, 0.25);
+    }
+
+    .err {
+      color: #f87171;
+      font-size: 0.7rem;
+      margin-top: 0.25rem;
+      display: none;
+    }
+
+    .err.show {
+      display: block;
+    }
+
+    .fi-err {
+      border-color: rgba(248, 113, 113, 0.5) !important;
+    }
+
+    /* ── Map & Gallery ── */
+    .map-dark {
+      filter: grayscale(1) invert(0.9) contrast(0.85) brightness(0.4) sepia(0.2) saturate(1.4);
+    }
+
+    .gal-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      display: flex;
+      align-items: flex-end;
+      padding: 1.5rem;
+      pointer-events: none;
+    }
+
+    .group:hover .gal-overlay {
+      opacity: 1;
+    }
+
+    /* Mobile overrides */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 3.8rem !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-ink text-cream selection:bg-gold selection:text-ink">
+
+  <!-- Glare Effect Overlay -->
+  <div class="mouse-glare hidden lg:block" id="glare"></div>
+
+  <!-- ═══════════════════════════════════════════════════════
+     NAVIGATION
+════════════════════════════════════════════════════════ -->
+  <nav id="navbar"
+    class="fixed top-0 left-0 w-full z-50 px-6 lg:px-12 py-4 flex items-center justify-between mix-blend-difference transition-all duration-300">
+    <a href="#home" class="flex items-center gap-3">
+      <svg id="crown-logo" width="34" height="34" viewBox="0 0 34 34" fill="none">
+        <path d="M17 5L21.5 13.5L30 9L25.5 22H8.5L4 9L12.5 13.5L17 5Z" stroke="#c9a84c" stroke-width="1.5"
+          stroke-linejoin="round" />
+        <rect x="7.5" y="24" width="19" height="3.5" rx="1" fill="#c9a84c" />
+      </svg>
+      <div>
+        <div class="font-display font-bold text-xl tracking-[0.18em] text-gold leading-none">KING STYLE</div>
+        <div class="font-body text-[0.6rem] tracking-[0.3em] text-cream/35 uppercase mt-0.5">Rosenheim</div>
+      </div>
+    </a>
+
+    <div class="hidden lg:flex items-center gap-10">
+      <a href="#about"
+        class="font-body text-[0.65rem] tracking-[0.25em] uppercase text-cream/60 hover:text-gold transition-colors">Über
+        uns</a>
+      <a href="#services"
+        class="font-body text-[0.65rem] tracking-[0.25em] uppercase text-cream/60 hover:text-gold transition-colors">Leistungen</a>
+      <a href="#gallery"
+        class="font-body text-[0.65rem] tracking-[0.25em] uppercase text-cream/60 hover:text-gold transition-colors">Galerie</a>
+      <a href="#contact"
+        class="font-body text-[0.65rem] tracking-[0.25em] uppercase text-cream/60 hover:text-gold transition-colors">Kontakt</a>
+      <a href="#booking"
+        class="font-body text-[0.65rem] tracking-[0.25em] font-semibold uppercase text-ink bg-gold px-6 py-2.5 hover:bg-goldl transition-colors">Termin
+        Buchen</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════ -->
+  <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+
+    <div class="hero-bg" id="hero-img"></div>
+    <div class="hero-vignette"></div>
+
+    <!-- Ambient Glow -->
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+      <div class="w-[800px] h-[400px] bg-gold rounded-full blur-[150px]"></div>
+    </div>
+
+    <div class="relative z-10 text-center px-6 max-w-5xl mx-auto pt-20">
+      <!-- Eyebrow -->
+      <div class="hidden md:inline-flex items-center justify-center gap-4 mb-8 hero-stagger">
+        <div class="h-px w-14 bg-gold/50"></div>
+        <span class="font-body text-[0.65rem] tracking-[0.45em] uppercase text-gold/80">Premium Barbershop ·
+          Rosenheim</span>
+        <div class="h-px w-14 bg-gold/50"></div>
+      </div>
+
+      <!-- Title -->
+      <h1 class="mb-8" id="main-title">
+        <span
+          class="block font-accent font-light italic text-cream/70 text-2xl md:text-3xl tracking-[0.12em] mb-4">Willkommen
+          bei</span>
+        <span
+          class="hero-title block font-display font-bold text-[5rem] md:text-[8.5rem] leading-none tracking-[0.04em] gold-text">KING</span>
+        <span
+          class="hero-title block font-display font-bold text-[5rem] md:text-[8.5rem] leading-none tracking-[0.04em] text-cream">STYLE</span>
+        <span
+          class="block font-body font-light text-cream/40 text-sm md:text-xl tracking-[0.45em] uppercase mt-5">Rosenheim</span>
+      </h1>
+
+      <p class="font-body text-cream/55 text-base md:text-xl max-w-2xl mx-auto leading-relaxed mb-12 hero-stagger">
+        Wo Präzision auf Stil trifft. Exklusive Haarschnitte, perfekte Bartpflege und Luxus-Rasur für den modernen
+        Gentleman.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-6 justify-center hero-stagger">
+        <a href="#booking" class="btn-lmax magnetic" data-strength="20"><span>Jetzt Termin buchen</span></a>
+        <a href="#services" class="btn-lmax magnetic" data-strength="15"><span>Unsere Leistungen</span></a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+     ÜBER UNS
+════════════════════════════════════════════════════════ -->
+  <section id="about" class="relative py-28 md:py-40">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+
+        <!-- Visual Panel (Using consistent glass/corner motif to align with text) -->
+        <div class="reveal relative">
+          <div class="relative glass-card corners" style="padding: 3rem;">
+            <span class="c3"></span><span class="c4"></span>
+
+            <div class="flex flex-col items-center justify-center gap-8 text-center relative z-10">
+              <svg width="60" height="60" viewBox="0 0 80 80" fill="none" stroke="#c9a84c" stroke-width="1.2"
+                class="opacity-40">
+                <path d="M40 8L50 30L70 16L62 48H18L10 16L30 30L40 8Z" stroke-linejoin="round" />
+              </svg>
+              <div class="w-20 h-px bg-gold/20"></div>
+              <div class="grid grid-cols-2 gap-10 w-full">
+                <div>
+                  <div class="font-display text-5xl gold-text font-bold">10+</div>
+                  <div class="font-body text-[0.6rem] tracking-[0.25em] uppercase text-cream/40 mt-2">Jahre Erfahrung
+                  </div>
+                </div>
+                <div>
+                  <div class="font-display text-5xl gold-text font-bold">5K+</div>
+                  <div class="font-body text-[0.6rem] tracking-[0.25em] uppercase text-cream/40 mt-2">Kunden</div>
+                </div>
+              </div>
+              <div class="w-20 h-px bg-gold/20"></div>
+              <div>
+                <div class="font-display text-5xl gold-text font-bold">100%</div>
+                <div class="font-body text-[0.6rem] tracking-[0.25em] uppercase text-cream/40 mt-2">Premium Produkte
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Panel -->
+        <div class="reveal">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="h-px w-10 bg-gold/50"></div>
+            <span class="font-body text-[0.65rem] tracking-[0.4em] uppercase text-gold">Über uns</span>
+          </div>
+          <h2 class="font-display text-4xl md:text-5xl font-bold text-cream leading-tight mb-8">
+            Der Ort, wo Stil<br>
+            <em class="font-accent font-normal italic gold-text">Königsklasse</em> wird
+          </h2>
+
+          <div class="space-y-6 font-body text-cream/60 leading-relaxed text-lg mb-12">
+            <p>King Style ist mehr als ein Barbershop – es ist ein Erlebnis. Mitten in Rosenheim haben wir einen Ort
+              geschaffen, an dem sich der moderne Gentleman fallen lassen kann und als frisch gestylter König wieder
+              geht.</p>
+            <p>Jeder Schnitt ist ein Statement. Jede Rasur ein Ritual. Wir arbeiten ausschließlich mit Premium-Produkten
+              und widmen jedem Kunden unsere volle, persönliche Aufmerksamkeit.</p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="flex gap-3 items-start p-4 glass-panel border-l-2 border-l-gold">
+              <div>
+                <div class="font-body text-sm font-medium text-cream">Premium Produkte</div>
+                <div class="font-body text-[0.7rem] text-cream/40 mt-1">Nur das Beste</div>
+              </div>
+            </div>
+            <div class="flex gap-3 items-start p-4 glass-panel border-l-2 border-l-gold">
+              <div>
+                <div class="font-body text-sm font-medium text-cream">Meister-Qualität</div>
+                <div class="font-body text-[0.7rem] text-cream/40 mt-1">Jahrelange Expertise</div>
+              </div>
+            </div>
+            <div class="flex gap-3 items-start p-4 glass-panel border-l-2 border-l-gold">
+              <div>
+                <div class="font-body text-sm font-medium text-cream">Luxus-Ambiente</div>
+                <div class="font-body text-[0.7rem] text-cream/40 mt-1">Gold &amp; Schwarz</div>
+              </div>
+            </div>
+            <div class="flex gap-3 items-start p-4 glass-panel border-l-2 border-l-gold">
+              <div>
+                <div class="font-body text-sm font-medium text-cream">Persönliche Beratung</div>
+                <div class="font-body text-[0.7rem] text-cream/40 mt-1">Individuell &amp; diskret</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+     LEISTUNGEN
+════════════════════════════════════════════════════════ -->
+  <section id="services" class="relative py-28 md:py-36 bg-[#080808]">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+
+      <div class="text-center mb-20 reveal">
+        <div class="flex items-center justify-center gap-4 mb-4">
+          <div class="h-px w-10 bg-gold/50"></div>
+          <span class="font-body text-[0.65rem] tracking-[0.4em] uppercase text-gold">Unser Angebot</span>
+          <div class="h-px w-10 bg-gold/50"></div>
+        </div>
+        <h2 class="font-display text-4xl md:text-5xl font-bold text-cream mb-4">Ihre <em
+            class="font-accent font-normal italic gold-text">Leistungen</em></h2>
+      </div>
+
+      <!-- The 6 Service Cards -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- 1 -->
+        <div class="glass-card corners reveal p-8">
+          <span class="c3"></span><span class="c4"></span>
+          <div class="flex items-start justify-between mb-8">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.2">
+              <path d="M6 2v10m0 0a4 4 0 108 0M14 2v10m0 0a4 4 0 108 0" stroke-linecap="round" />
+              <path d="M6 22v-6M14 22v-6" stroke-linecap="round" />
+            </svg>
+            <div class="text-right">
+              <div class="font-display text-2xl gold-text font-bold">25 €</div>
+              <div class="font-body text-[0.6rem] text-cream/30 tracking-widest uppercase">ab</div>
+            </div>
+          </div>
+          <h3 class="font-display text-xl text-cream mb-2">Haarschnitt</h3>
+          <p class="font-body text-cream/40 text-sm leading-relaxed mb-6">Klassisch oder modern – präzise nach Ihren
+            Wünschen. Inkl. Waschen.</p>
+          <div class="w-full h-px bg-gold/10 mb-4"></div>
+          <ul class="space-y-2">
+            <li class="flex items-center gap-3 text-xs text-cream/50"><span
+                class="w-1.5 h-1.5 bg-gold rounded-full"></span>Beratungsgespräch</li>
+            <li class="flex items-center gap-3 text-xs text-cream/50"><span
+                class="w-1.5 h-1.5 bg-gold rounded-full"></span>Premium Styling</li>
+          </ul>
+        </div>
+
+        <!-- 2 -->
+        <div class="glass-card corners reveal p-8">
+          <span class="c3"></span><span class="c4"></span>
+          <div class="flex items-start justify-between mb-8">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.2">
+              <path d="M12 3C7.5 3 4 7 4 12v6h16v-6c0-5-3.5-9-8-9z" stroke-linecap="round" />
+              <path d="M8 14c0 2.2 1.8 4 4 4s4-1.8 4-4" stroke-linecap="round" />
+            </svg>
+            <div class="text-right">
+              <div class="font-display text-2xl gold-text font-bold">15 €</div>
+              <div class="font-body text-[0.6rem] text-cream/30 tracking-widest uppercase">ab</div>
+            </div>
+          </div>
+          <h3 class="font-display text-xl text-cream mb-2">Bartpflege</h3>
+          <p class="font-body text-cream/40 text-sm leading-relaxed mb-6">Konturschnitt, Trimmen und Shaping für den
+            perfekten Look.</p>
+          <div class="w-full h-px bg-gold/10 mb-4"></div>
+          <ul class="space-y-2">
+            <li class="flex items-center gap-3 text-xs text-cream/50"><span
+                class="w-1.5 h-1.5 bg-gold rounded-full"></span>Konturen & Shape</li>
+            <li class="flex items-center gap-3 text-xs text-cream/50"><span
+                class="w-1.5 h-1.5 bg-gold rounded-full"></span>Bartöl-Behandlung</li>
+          </ul>
+        </div>
+
+        <!-- 3 Featured -->
+        <div class="glass-card corners reveal p-8 relative border-[#c9a84c]/30"
+          style="background: rgba(201,168,76,0.03);">
+          <span class="c3"></span><span class="c4"></span>
+          <div
+            class="absolute top-4 right-4 px-3 py-1 bg-gold text-ink font-body text-[0.55rem] tracking-[0.2em] uppercase font-bold shadow-[0_0_15px_rgba(201,168,76,0.3)]">
+            Beliebt</div>
+          <div class="flex items-start justify-between mb-8">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.2">
+              <path d="M6 4v16" stroke-linecap="round" />
+              <path d="M6 4l12 4-12 4" stroke-linejoin="round" stroke-linecap="round" />
+              <path d="M10 18l4-2-4 4" stroke-linejoin="round" stroke-linecap="round" />
+            </svg>
+            <div class="text-right">
+              <div class="font-display text-2xl gold-text font-bold">30 €</div>
+              <div class="font-body text-[0.6rem] text-cream/30 tracking-widest uppercase mt-4">ab</div>
+            </div>
+          </div>
+          <h3 class="font-display text-xl text-cream mb-2">Klassische Rasur</h3>
+          <p class="font-body text-cream/40 text-sm leading-relaxed mb-6">Heißes Tuch, Rasiermesser, Vor- &amp;
+            Nachpflege. Ein Ritual der alten Schule.</p>
+          <div class="w-full h-px bg-gold/20 mb-4"></div>
+          <ul class="space-y-2">
+            <li class="flex items-center gap-3 text-xs text-cream/60"><span
+                class="w-1.5 h-1.5 bg-gold rounded-full"></span>Heißes Tuch</li>
+            <li class="flex items-center gap-3 text-xs text-cream/60"><span
+                class="w-1.5 h-1.5 bg-gold rounded-full"></span>Rasiermesser</li>
+          </ul>
+        </div>
+
+        <!-- 4 -->
+        <div class="glass-card corners reveal p-8">
+          <span class="c3"></span><span class="c4"></span>
+          <div class="flex items-start justify-between mb-8">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.2">
+              <circle cx="12" cy="9" r="7" />
+              <path d="M5 21c0-4 4-8 7-8s7 4 7 8" />
+            </svg>
+            <div class="text-right">
+              <div class="font-display text-2xl gold-text font-bold">20 €</div>
+              <div class="font-body text-[0.6rem] text-cream/30 tracking-widest uppercase">ab</div>
+            </div>
+          </div>
+          <h3 class="font-display text-xl text-cream mb-2">Haarpflege</h3>
+          <p class="font-body text-cream/40 text-sm leading-relaxed mb-6">Deep Conditioning, Kopfhautmassage für vitales
+            Haar.</p>
+          <div class="w-full h-px bg-gold/10 mb-4"></div>
+          <ul class="space-y-2">
+            <li class="flex items-center gap-3 text-xs text-cream/50"><span
+                class="w-1.5 h-1.5 bg-gold rounded-full"></span>Kopfhautmassage</li>
+            <li class="flex items-center gap-3 text-xs text-cream/50"><span
+                class="w-1.5 h-1.5 bg-gold rounded-full"></span>Konditionierung</li>
+          </ul>
+        </div>
+
+        <!-- 5 -->
+        <div class="glass-card corners reveal p-8">
+          <span class="c3"></span><span class="c4"></span>
+          <div class="flex items-start justify-between mb-8">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.2">
+              <rect x="3" y="3" width="7" height="7" />
+              <rect x="14" y="3" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" />
+              <rect x="14" y="14" width="7" height="7" />
+            </svg>
+            <div class="text-right">
+              <div class="font-display text-2xl gold-text font-bold">35 €</div>
+              <div class="font-body text-[0.6rem] text-cream/30 tracking-widest uppercase">ab</div>
+            </div>
+          </div>
+          <h3 class="font-display text-xl text-cream mb-2">Kombi-Paket</h3>
+          <p class="font-body text-cream/40 text-sm leading-relaxed mb-6">Haar &amp; Bart in einer Session. Der
+            komplette Look.</p>
+          <div class="w-full h-px bg-gold/10 mb-4"></div>
+          <ul class="space-y-2">
+            <li class="flex items-center gap-3 text-xs text-cream/50"><span
+                class="w-1.5 h-1.5 bg-gold rounded-full"></span>Haar + Bart</li>
+            <li class="flex items-center gap-3 text-xs text-cream/50"><span
+                class="w-1.5 h-1.5 bg-gold rounded-full"></span>Rundum Styling</li>
+          </ul>
+        </div>
+
+        <!-- 6 -->
+        <div class="glass-card corners reveal p-8" style="background: rgba(201,168,76,0.015);">
+          <span class="c3"></span><span class="c4"></span>
+          <div class="flex items-start justify-between mb-8">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.2">
+              <path d="M12 2l2 7h7l-5.5 4 2 7-6.5-4.5L4.5 20l2-7L1 9h7z" stroke-linejoin="round" />
+            </svg>
+            <div class="text-right">
+              <div class="font-display text-2xl gold-text font-bold">60 €</div>
+              <div class="font-body text-[0.6rem] text-cream/30 tracking-widest uppercase">ab</div>
+            </div>
+          </div>
+          <h3 class="font-display text-xl text-cream mb-2">VIP Treatment</h3>
+          <p class="font-body text-cream/40 text-sm leading-relaxed mb-6">Das volle Programm: Haarschnitt, Rasur,
+            Massage. King Level.</p>
+          <div class="w-full h-px bg-gold/10 mb-4"></div>
+          <ul class="space-y-2">
+            <li class="flex items-center gap-3 text-xs text-cream/50"><span
+                class="w-1.5 h-1.5 bg-gold rounded-full"></span>Alles inklusive</li>
+            <li class="flex items-center gap-3 text-xs text-cream/50"><span
+                class="w-1.5 h-1.5 bg-gold rounded-full"></span>Exklusive Produkte</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="text-center mt-16 reveal">
+        <a href="#booking" class="btn-lmax magnetic" data-strength="15"><span>Jetzt Termin sichern</span></a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+     GALERIE
+════════════════════════════════════════════════════════ -->
+  <section id="gallery" class="py-28 md:py-40 relative">
+    <div class="absolute inset-0 bg-gold/5 blur-[150px] pointer-events-none rounded-full w-1/2 h-1/2 left-1/4 top-1/4">
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+      <div class="text-center mb-16 reveal">
+        <div class="flex items-center justify-center gap-4 mb-4">
+          <div class="h-px w-10 bg-gold/50"></div>
+          <span class="font-body text-[0.65rem] tracking-[0.4em] uppercase text-gold">Unsere Arbeit</span>
+          <div class="h-px w-10 bg-gold/50"></div>
+        </div>
+        <h2 class="font-display text-4xl md:text-5xl font-bold text-cream">Die <em
+            class="font-accent font-normal italic gold-text">Galerie</em></h2>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+
+        <div class="reveal-scale group relative overflow-hidden glass-panel border border-gold/10" style="aspect-ratio:1/1">
+          <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=800"
+            class="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-105"
+            alt="Premium Werkzeug">
+          <div class="gal-overlay"><span class="font-display text-xl text-cream tracking-wide">Premium Werkzeug</span></div>
+        </div>
+
+        <div class="reveal-scale group relative overflow-hidden glass-panel border border-gold/10" style="aspect-ratio:1/1">
+          <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=800"
+            class="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-105"
+            alt="Fade & Kontur">
+          <div class="gal-overlay"><span class="font-display text-xl text-cream tracking-wide">Fade & Kontur</span></div>
+        </div>
+
+        <div class="reveal-scale group relative overflow-hidden glass-panel border border-gold/10" style="aspect-ratio:1/1">
+          <img src="https://images.unsplash.com/photo-1621607512214-68297480165e?w=800"
+            class="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-105"
+            alt="Bartpflege">
+          <div class="gal-overlay"><span class="font-display text-xl text-cream tracking-wide">Bartpflege</span></div>
+        </div>
+
+        <div class="reveal-scale group relative overflow-hidden glass-panel border border-gold/10" style="aspect-ratio:1/1">
+          <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800"
+            class="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-105"
+            alt="King Style Rosenheim">
+          <div class="gal-overlay"><span class="font-display text-xl text-cream tracking-wide">King Style Rosenheim</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+     ONLINE-BUCHUNG
+════════════════════════════════════════════════════════ -->
+  <section id="booking" class="relative py-28 md:py-40 bg-[#080808]">
+    <div class="max-w-3xl mx-auto px-6 lg:px-0 relative z-10">
+
+      <div class="text-center mb-16 reveal">
+        <div class="flex items-center justify-center gap-4 mb-4">
+          <div class="h-px w-10 bg-gold/50"></div>
+          <span class="font-body text-[0.65rem] tracking-[0.4em] uppercase text-gold">Reservierung</span>
+          <div class="h-px w-10 bg-gold/50"></div>
+        </div>
+        <h2 class="font-display text-4xl md:text-5xl font-bold text-cream mb-4">
+          Termin <em class="font-accent font-normal italic gold-text">buchen</em>
+        </h2>
+      </div>
+
+      <!-- Contact Form with Pro styling -->
+      <div class="reveal glass-card corners relative p-8 md:p-14">
+        <span class="c3"></span><span class="c4"></span>
+
+        <div id="formContent">
+          <form id="bookingForm" novalidate>
+            <div class="grid md:grid-cols-2 gap-x-6 gap-y-8">
+
+              <div class="flex flex-col gap-2 relative">
+                <label for="name" class="font-body text-[0.65rem] tracking-[0.25em] uppercase text-cream/50">Name <span
+                    class="text-gold">*</span></label>
+                <input type="text" id="name" name="name" required class="fi py-3 text-sm">
+                <span class="err" id="nameErr">Eingabe erforderlich.</span>
+              </div>
+
+              <div class="flex flex-col gap-2 relative">
+                <label for="phone" class="font-body text-[0.65rem] tracking-[0.25em] uppercase text-cream/50">Telefon
+                  <span class="text-gold">*</span></label>
+                <input type="tel" id="phone" name="phone" required class="fi py-3 text-sm">
+                <span class="err" id="phoneErr">Eingabe erforderlich.</span>
+              </div>
+
+              <div class="flex flex-col gap-2 relative">
+                <label for="date" class="font-body text-[0.65rem] tracking-[0.25em] uppercase text-cream/50">Wunschdatum
+                  <span class="text-gold">*</span></label>
+                <input type="date" id="date" name="date" required class="fi py-3 text-sm">
+                <span class="err" id="dateErr">Datum wählen.</span>
+              </div>
+
+              <div class="flex flex-col gap-2 relative">
+                <label for="time" class="font-body text-[0.65rem] tracking-[0.25em] uppercase text-cream/50">Uhrzeit
+                  <span class="text-gold">*</span></label>
+                <select id="time" name="time" required class="fi py-3 text-sm cursor-pointer">
+                  <option value="" disabled selected>Uhrzeit wählen</option>
+                  <option>09:00 Uhr</option>
+                  <option>10:00 Uhr</option>
+                  <option>11:00 Uhr</option>
+                  <option>12:00 Uhr</option>
+                  <option>14:00 Uhr</option>
+                  <option>16:00 Uhr</option>
+                </select>
+                <span class="err" id="timeErr">Uhrzeit wählen.</span>
+              </div>
+
+              <div class="flex flex-col gap-2 md:col-span-2 relative">
+                <label for="service" class="font-body text-[0.65rem] tracking-[0.25em] uppercase text-cream/50">Leistung
+                  <span class="text-gold">*</span></label>
+                <select id="service" name="service" required class="fi py-3 text-sm cursor-pointer">
+                  <option value="" disabled selected>Leistung auswählen</option>
+                  <option>Haarschnitt – ab 25 €</option>
+                  <option>Bartpflege – ab 15 €</option>
+                  <option>Klassische Rasur – ab 30 €</option>
+                  <option>VIP Royal Treatment – ab 60 €</option>
+                </select>
+                <span class="err" id="serviceErr">Leistung wählen.</span>
+              </div>
+            </div>
+
+            <div class="mt-8">
+              <button type="submit" id="submitBtn" class="btn-lmax w-full">
+                <span id="submitTxt">Terminanfrage Senden</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div id="successMsg" class="hidden py-16 text-center">
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1"
+            class="mx-auto mb-6" stroke-linejoin="round">
+            <path d="M20 6L9 17l-5-5" stroke-linecap="round" />
+          </svg>
+          <div class="font-display text-4xl gold-text mb-4">Empfangen.</div>
+          <p class="font-body text-cream/50 text-sm leading-relaxed max-w-sm mx-auto">Ihre Anfrage wurde an uns
+            weitergeleitet. Wir kontaktieren Sie in Kürze zur Bestätigung.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+     KONTAKT & ANFAHRT
+════════════════════════════════════════════════════════ -->
+  <section id="contact" class="py-28 md:py-40">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+
+      <div class="reveal">
+        <div class="flex items-center gap-4 mb-4">
+          <div class="h-px w-10 bg-gold/50"></div>
+          <span class="font-body text-[0.65rem] tracking-[0.4em] uppercase text-gold">Finden Sie uns</span>
+        </div>
+        <h2 class="font-display text-4xl md:text-5xl font-bold text-cream mb-16">
+          Kontakt &amp; <em class="font-accent font-normal italic gold-text">Anfahrt</em>
+        </h2>
+
+        <div class="space-y-12">
+          <div class="flex gap-6 group">
+            <div class="mt-1"><svg width="24" height="24" fill="none" stroke="#c9a84c" stroke-width="1">
+                <circle cx="12" cy="10" r="3" />
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+              </svg></div>
+            <div>
+              <div class="font-body text-[0.6rem] tracking-[0.3em] uppercase text-gold/60 mb-2">Location</div>
+              <div class="font-display text-2xl text-cream mb-2 group-hover:text-gold transition-colors">King Style
+                Barbershop</div>
+              <address class="font-body text-cream/50 text-sm leading-relaxed not-italic">Salinstraße 7<br>83022
+                Rosenheim<br>Deutschland</address>
+            </div>
+          </div>
+
+          <div class="flex gap-6 group">
+            <div class="mt-1"><svg width="24" height="24" fill="none" stroke="#c9a84c" stroke-width="1">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 6v6l4 2" />
+              </svg></div>
+            <div class="w-full max-w-sm">
+              <div class="font-body text-[0.6rem] tracking-[0.3em] uppercase text-gold/60 mb-3">Zeiten</div>
+              <div class="flex justify-between border-b border-gold/10 py-2"><span class="text-sm text-cream/50">Mo –
+                  Fr</span> <span class="text-sm text-cream">09:00 – 19:00</span></div>
+              <div class="flex justify-between border-b border-gold/10 py-2"><span
+                  class="text-sm text-cream/50">Samstag</span> <span class="text-sm text-cream">09:00 – 18:00</span>
+              </div>
+              <div class="flex justify-between py-2"><span class="text-sm text-cream/50">Sonntag</span> <span
+                  class="text-sm text-gold">Geschlossen</span></div>
+            </div>
+          </div>
+
+          <div class="flex gap-6 group">
+            <div class="mt-1"><svg width="24" height="24" fill="none" stroke="#c9a84c" stroke-width="1">
+                <path
+                  d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
+              </svg></div>
+            <div>
+              <div class="font-body text-[0.6rem] tracking-[0.3em] uppercase text-gold/60 mb-2">Telefon</div>
+              <a href="tel:+4980317966982"
+                class="font-display text-2xl text-cream hover:text-gold transition-colors">+49 8031 796 6982</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Google Maps iFrame inside glass border -->
+      <div class="reveal relative h-[450px] glass-card corners p-2">
+        <span class="c3"></span><span class="c4"></span>
+        <iframe src="https://maps.google.com/maps?q=Salinstra%C3%9Fe+7%2C+83022+Rosenheim&output=embed&hl=de&z=16"
+          class="map-dark w-full h-full object-cover" style="border:0" allowfullscreen loading="lazy"
+          title="Map"></iframe>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════ -->
+  <footer class="relative py-16 border-t border-gold/10 bg-[#020202]">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-8 mb-12">
+
+        <a href="#home" class="flex items-center gap-3">
+          <svg width="24" height="24" viewBox="0 0 34 34" fill="none">
+            <path d="M17 5L21.5 13.5L30 9L25.5 22H8.5L4 9L12.5 13.5L17 5Z" stroke="#c9a84c" stroke-width="1.5"
+              stroke-linejoin="round" />
+          </svg>
+          <span class="font-display font-bold text-lg tracking-[0.2em] text-gold">KING STYLE</span>
+        </a>
+
+        <div
+          class="flex flex-wrap justify-center gap-8 font-body text-[0.6rem] tracking-[0.25em] uppercase text-cream/40">
+          <a href="#about" class="hover:text-gold transition-colors">Über uns</a>
+          <a href="#services" class="hover:text-gold transition-colors">Leistungen</a>
+          <a href="#gallery" class="hover:text-gold transition-colors">Galerie</a>
+          <a href="#booking" class="hover:text-gold transition-colors">Buchen</a>
+        </div>
+
+      </div>
+      <div class="w-full h-px bg-gold/10 mb-8"></div>
+      <div
+        class="flex flex-col md:flex-row justify-between items-center text-[0.6rem] tracking-widest text-cream/20 uppercase font-body">
+        <span>&copy; 2026 King Style Rosenheim</span>
+        <span>Designed with Excellence</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════════
+     GSAP & INTERACTIVITY LOGIC
+════════════════════════════════════════════════════════ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+    // 1. Mouse Glare Effect
+    const glare = document.getElementById('glare');
+    if (window.matchMedia("(min-width: 1024px)").matches) {
+      window.addEventListener('mousemove', e => {
+        document.documentElement.style.setProperty('--glare-x', `${e.clientX}px`);
+        document.documentElement.style.setProperty('--glare-y', `${e.clientY}px`);
+      });
+    }
+
+    // 2. Navbar Blur on Scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('bg-[#050505]/90', 'backdrop-blur-md', 'border-b', 'border-gold/10');
+        navbar.classList.remove('py-4');
+        navbar.classList.add('py-2');
+      } else {
+        navbar.classList.remove('bg-[#050505]/90', 'backdrop-blur-md', 'border-b', 'border-gold/10');
+        navbar.classList.add('py-4');
+        navbar.classList.remove('py-2');
+      }
+    });
+
+    // 3. Setup Reveals for entire document
+    gsap.utils.toArray('.reveal').forEach((el) => {
+      gsap.to(el, {
+        scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" },
+        opacity: 1, y: 0, duration: 1.5, ease: "expo.out"
+      });
+    });
+
+    gsap.utils.toArray('.reveal-scale').forEach((el, index) => {
+      gsap.to(el, {
+        scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" },
+        opacity: 1, scale: 1, duration: 1.8, ease: "power4.out", delay: index * 0.1
+      });
+    });
+
+    // 4. Hero Intro Timeline
+    const tl = gsap.timeline();
+    tl.from("#hero-img", { scale: 1.15, opacity: 0, duration: 2.5, ease: "power2.out" })
+      .from(".hero-stagger", { y: 20, opacity: 0, duration: 1, stagger: 0.1, ease: "power3.out" }, "-=1.5")
+      .from("#main-title span", { y: 60, opacity: 0, skewY: 5, stagger: 0.15, duration: 1.2, ease: "power4.out" }, "-=1.5")
+      .from("#crown-logo path", { strokeDasharray: (i, el) => el.getTotalLength(), strokeDashoffset: (i, el) => el.getTotalLength(), duration: 2, ease: "power2.inOut" }, "-=1.2")
+    .from("#crown-logo rect", { scaleY: 0, transformOrigin: "bottom", duration: 1, ease: "power2.out" }, "-=1.0");
+
+    // 5. Cinematic Background Scrub
+    gsap.to("#hero-img", {
+      scale: 1.25,
+      y: 100,
+      scrollTrigger: {
+        trigger: "#home", start: "top top", end: "bottom top", scrub: true
+      }
+    });
+
+    // 6. Magnetic Elements (Pro Touch)
+    document.querySelectorAll('.magnetic').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const bounds = btn.getBoundingClientRect();
+        const str = btn.dataset.strength || 20;
+        const moveX = (e.clientX - bounds.left - bounds.width / 2) / bounds.width * str;
+        const moveY = (e.clientY - bounds.top - bounds.height / 2) / bounds.height * str;
+        gsap.to(btn, { x: moveX, y: moveY, duration: 0.5, ease: "power3.out" });
+      });
+      btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" });
+      });
+    });
+
+    // 7. Smooth Anchor Nav
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) gsap.to(window, { duration: 1.2, scrollTo: { y: target, offsetY: 70 }, ease: "expo.inOut" });
+      });
+    });
+
+    // 8. Form Logic (Validation & Submit imitation)
+    const form = document.getElementById('bookingForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let valid = true;
+      ['name', 'phone', 'date', 'time', 'service'].forEach(id => {
+        const el = document.getElementById(id);
+        const err = document.getElementById(id + 'Err');
+        if (el.value.trim() === '') {
+          el.classList.add('fi-err'); err.classList.add('show'); valid = false;
+        } else {
+          el.classList.remove('fi-err'); err.classList.remove('show');
+        }
+      });
+
+      if (valid) {
+        document.getElementById('submitBtn').disabled = true;
+        document.getElementById('submitTxt').textContent = 'Senden...';
+        setTimeout(() => {
+          document.getElementById('formContent').classList.add('hidden');
+          document.getElementById('successMsg').classList.remove('hidden');
+        }, 1200);
+      }
+    });
+  </script>
+</body>
+
+</html>
